@@ -162,9 +162,7 @@ async post(path: string, queryDto: SearchTransactionDto) {
 private mockPostResponse(path: string, queryDto: SearchTransactionDto) {
   if (path.includes('/api/en/transactions/search')) {
     const q = queryDto.query;
-    console.log("q", q);
     const query = q.toLowerCase();
-    console.log("query", query);
     const allTransactions = [
   { id: 't1', sender: 'Abebe', receiver: 'Bob', amount: 50, currency: 'USD', cause: 'deposit', created_at: 1705314180000 },  // Jan 15 2024
   { id: 't2', sender: 'Bob', receiver: 'Alice', amount: 20, currency: 'USD', cause: 'withdrawal', created_at: 1709393100000 }, // Mar 2 2024
