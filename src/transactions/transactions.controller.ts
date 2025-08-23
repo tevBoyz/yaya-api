@@ -1,7 +1,9 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Post, Get, Query, Body } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
+import { SearchTransactionDto } from './dto/search-transaction-dto';
+import { Transaction} from './interfaces/transaction.interface';
 
-@Controller('api/en/transactions')
+@Controller('transactions')
 export class TransactionsController {
     constructor(private readonly transactionsService: TransactionsService) { }
 
@@ -9,4 +11,11 @@ export class TransactionsController {
     async findByUser(@Query('userId') userId: string, @Query('page') page: number) {
         return this.transactionsService.findByUser(userId, page);
     }
+
+    @Post('search')
+    searchTransactions(@Body() queryDto: SearchTransactionDto): Promise<{ results: Transaction[] }> {
+        console.log("fomrtcon", queryDto);
+        return this.transactionsService.searchTransactions(queryDto);
+    }
+
 }

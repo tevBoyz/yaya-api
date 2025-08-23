@@ -3,6 +3,7 @@ import * as crypto from "crypto";
 import { ConfigService } from "@nestjs/config";
 import { HttpService } from "@nestjs/axios";
 import { Injectable, Logger } from "@nestjs/common";
+import { SearchTransactionDto } from "src/transactions/dto/search-transaction-dto";
 
 @Injectable()
 export class YayaHttpService {
@@ -31,7 +32,6 @@ export class YayaHttpService {
     // 🔹 Mock mode
     if (this.useMock) {
       this.logger.log(`[YayaHttpService] Mock GET ${fullPath}`);
-      console.log("david:" + " " + fullPath, params);
       return this.mockResponse(fullPath, params);
     }
 
@@ -60,6 +60,45 @@ export class YayaHttpService {
       throw error;
     }
   }
+
+  /**
+ * Generic POST wrapper
+ */
+async post(path: string, queryDto: SearchTransactionDto) {
+  const fullPath = path.startsWith('/') ? path : `/${path}`;
+
+  // 🔹 Mock mode
+  if (this.useMock === 'true') {
+    this.logger.log(`[YayaHttpService] Mock POST ${fullPath}`);
+    return this.mockPostResponse(fullPath, queryDto);
+  }
+
+  // 🔹 Real API logic
+  const timestamp = Date.now().toString();
+  const prehash = `${timestamp}POST${fullPath}${queryDto ? JSON.stringify(queryDto) : ''}`;
+  const signature = crypto
+    .createHmac('sha256', this.apiSecret)
+    .update(prehash)
+    .digest('base64');
+
+  const headers = {
+    'YAYA-API-KEY': this.apiKey,
+    'YAYA-SIGNATURE': signature,
+    'YAYA-TIMESTAMP': timestamp,
+  };
+
+  try {
+    this.logger.log(`[YayaHttpService] Real POST ${this.baseUrl}${fullPath}`);
+    const response = await firstValueFrom(
+      this.http.post(`${this.baseUrl}${fullPath}`, queryDto, { headers }),
+    );
+    return (response as { data: any }).data;
+  } catch (error) {
+    this.logger.error(`Error calling YaYa API: ${error.message}`);
+    throw error;
+  }
+}
+
 
   /**
    * Mock responses for now
@@ -95,4 +134,33 @@ export class YayaHttpService {
 
     return { message: `Mock response for ${path}` };
   }
+
+
+  /**
+ * Mock responses for POST requests
+ */
+// private mockPostResponse(path: string, body: Record<string, any> = {}) {
+private mockPostResponse(path: string, queryDto: SearchTransactionDto) {
+  if (path.includes('/api/en/transactions/search')) {
+    const query = (queryDto.query);
+    const allTransactions = [
+      { id: 't1', sender: 'abebe', receiver: 'Bob', amount: 50, currency: 'USD', cause: 'deposit', created_at: new Date().toISOString() },
+      { id: 't2', sender: 'Bob', receiver: 'Alice', amount: 20, currency: 'USD', cause: 'withdrawal', created_at: new Date().toISOString() },
+      { id: 't3', sender: 'Charlie', receiver: 'Alice', amount: 75, currency: 'USD', cause: 'transfer', created_at: new Date().toISOString() },
+      { id: 't4', sender: 'Abebe', receiver: 'Kebede', amount: 100, currency: 'ETB', cause: 'payment', created_at: new Date().toISOString() },
+    ];
+
+    const filtered = allTransactions.filter(
+      (t) =>
+        t.sender.toLowerCase().includes(query) ||
+        t.receiver.toLowerCase().includes(query) ||
+        t.cause.toLowerCase().includes(query) ||
+        t.id.toLowerCase().includes(query),
+    );
+
+    return { results: filtered };
+  }
+
+  return { message: `Mock POST response for ${path}` };
+}
 }
