@@ -14,7 +14,6 @@ export class TransactionsController {
 
     @Post('search')
     searchTransactions(@Body() queryDto: SearchTransactionDto): Promise<{ results: Transaction[] }> {
-        console.log("fomrtcon", queryDto);
         return this.transactionsService.searchTransactions(queryDto);
     }
 
