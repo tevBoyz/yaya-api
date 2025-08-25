@@ -1,98 +1,136 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Yaya API Middleware
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A secure middleware API that acts as a shield between your frontend applications and the Yaya Wallet API, handling authentication and request signing automatically.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
-## Description
+## 🛡️ Purpose
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This API middleware serves as a security layer to protect your Yaya Wallet API credentials. Instead of calling the Yaya API directly from frontend code (which would expose your API key and secret), all requests are routed through this middleware which:
 
-## Project setup
+- Securely stores API credentials in environment variables
+- Automatically generates required HMAC signatures for each request
+- Adds proper authentication headers
+- Acts as a proxy between your frontend and the Yaya API
 
+## ✨ Features
+
+- **Secure Authentication**: Automatically signs requests with keyed-HMAC signatures
+- **Environment Protection**: Keeps API credentials secure on the server side
+- **Header Management**: Handles all required authentication headers automatically
+- **Easy Integration**: Provides simple endpoints that mirror the Yaya API
+- **CORS Enabled**: Ready to be consumed by frontend applications
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+- Yaya Wallet API credentials (API Key and Secret)
+
+### Installation
+
+1. Clone the repository:
 ```bash
-$ npm install
+git clone https://github.com/tevBoyz/yaya-api.git
+cd yaya-api
 ```
 
-## Compile and run the project
-
+2. Install dependencies:
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+3. Set up environment variables. Create a `.env` file in the root directory:
+```env
+YAYA_API_KEY=your_api_key_here
+YAYA_API_SECRET=your_api_secret_here
+YAYA_BASE_URL=https://sandbox.yayawallet.com
 ```
 
-## Deployment
+4. Start the server:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+For development with auto-restart:
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run dev
+
+# Server runs on http://localhost:3000
+
+# Use the frontend repo to clone and start the dashboard to view results
+# Alternatively, use Postman to test responses using the endpoints below
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 📖 API Endpoints
 
-## Resources
+### Get Server Time
+```http
+GET http://localhost:3000/time
+```
+Maps to: `GET https://sandbox.yayawallet.com/api/en/time`
 
-Check out a few resources that may come in handy when working with NestJS:
+### Get User Transactions
+```http
+GET http://localhost:3000/transactions/find-by-user
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# With pagination:
+GET http://localhost:3000/transactions/find-by-user?p=1
+# Returns the first page of transactions
+```
+Maps to: `GET https://sandbox.yayawallet.com/api/en/transaction/find-by-user`
 
-## Support
+### Search Transactions
+```http
+POST http://localhost:3000/transactions/search
+Content-Type: application/json
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+{
+  "query": "Your_search_parameter"
+}
+```
+Maps to: `POST https://sandbox.yayawallet.com/api/en/transaction/search`
 
-## Stay in touch
+## 🔐 How It Works
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+This middleware automatically handles the Yaya API authentication requirements:
 
-## License
+1. **Timestamp**: Generates a current timestamp for each request (no authentication headers required for the time endpoint)
+2. **Signature**: Creates an HMAC signature using your API secret
+3. **Headers**: Adds the required headers to each request:
+   - `YAYA_API_KEY`: Your Yaya API key
+   - `YAYA_API_TIMESTAMP`: The current timestamp
+   - `YAYA_API_SIGN`: The generated HMAC signature
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 🛠️ Built With
+
+- [NestJS](https://nestjs.com/) - API framework
+- [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript
+- [Crypto](https://nodejs.org/api/crypto.html) - Node.js built-in crypto module for HMAC generation
+- [Dotenv](https://github.com/motdotla/dotenv) - Environment variable management
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/tevBoyz/yaya-api/issues).
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a pull request
+
+## ⚠️ Important Security Notes
+
+- Never commit your `.env` file or expose your API credentials
+- Ensure your server environment is secure
+- Use HTTPS in production environments
+- Regularly rotate your API keys for enhanced security
+
+## 📧 Support
+
+If you have any questions or need help, please open an issue on GitHub or contact the development team.
+
+---
+
+**Disclaimer**: This project is not officially affiliated with Yaya Wallet. It is an independent middleware solution designed to enhance security when working with the Yaya Wallet API.
