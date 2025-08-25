@@ -1,9 +1,10 @@
+//interface for Transaction object
 export interface Transaction {
-  id: string; // Transaction ID
+  id: string; 
   sender: string;
   receiver: string;
   amount: number;
   currency: string;
   cause: string;
-  createdAt: string; // ISO timestamp
+  createdAt: string;
 }

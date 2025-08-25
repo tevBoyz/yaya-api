@@ -7,11 +7,13 @@ import { Transaction} from './interfaces/transaction.interface';
 export class TransactionsController {
     constructor(private readonly transactionsService: TransactionsService) { }
 
+    //GET /transactions/find-by-user?p=1 Endpoint
     @Get('find-by-user')
-    async findByUser(@Query('userId') userId: string, @Query('page') page: number) {
-        return this.transactionsService.findByUser(userId, page);
+    async findByUser(@Query('p') p: number) {
+        return this.transactionsService.findByUser(p);
     }
 
+    //POST /transactions/search Endpoint
     @Post('search')
     searchTransactions(@Body() queryDto: SearchTransactionDto): Promise<{ results: Transaction[] }> {
         return this.transactionsService.searchTransactions(queryDto);
