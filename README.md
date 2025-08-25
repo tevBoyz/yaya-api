@@ -6,7 +6,7 @@ A secure middleware API that acts as a shield between your frontend applications
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
-## 🛡️ Purpose
+##  Purpose
 
 This API middleware serves as a security layer to protect your Yaya Wallet API credentials. Instead of calling the Yaya API directly from frontend code (which would expose your API key and secret), all requests are routed through this middleware which:
 
@@ -15,7 +15,7 @@ This API middleware serves as a security layer to protect your Yaya Wallet API c
 - Adds proper authentication headers
 - Acts as a proxy between your frontend and the Yaya API
 
-## ✨ Features
+##  Features
 
 - **Secure Authentication**: Automatically signs requests with keyed-HMAC signatures
 - **Environment Protection**: Keeps API credentials secure on the server side
@@ -32,7 +32,7 @@ This API middleware serves as a security layer to protect your Yaya Wallet API c
         });
   ```
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
@@ -74,7 +74,7 @@ npm run dev
 # Alternatively, use Postman to test responses using the endpoints below
 ```
 
-## 📖 API Endpoints
+## API Endpoints
 
 ### Get Server Time
 ```http
@@ -100,7 +100,7 @@ Content-Type: application/json
 }
 ```
 
-## 🔐 How It Works
+## How It Works
 
 This middleware automatically handles the Yaya API authentication requirements:
 
@@ -122,31 +122,21 @@ This middleware automatically handles the Yaya API authentication requirements:
    - `YAYA_API_TIMESTAMP`: The current timestamp
    - `YAYA_API_SIGN`: The generated HMAC signature
 
-## 🛠️ Built With
+##  Built With
 
 - [NestJS](https://nestjs.com/) - API framework
 - [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript
 - [Crypto](https://nodejs.org/api/crypto.html) - Node.js built-in crypto module for HMAC generation
 - [Dotenv](https://github.com/motdotla/dotenv) - Environment variable management
 
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/tevBoyz/yaya-api/issues).
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a pull request
-
-## ⚠️ Important Security Notes
+##  Important Security Notes
 
 - Never commit your `.env` file or expose your API credentials
 - Ensure your server environment is secure
 - Use HTTPS in production environments
 - Regularly rotate your API keys for enhanced security
 
-## 📧 Support
+## Support
 
 If you have any questions or need help, please open an issue on GitHub or contact the development team.
 
