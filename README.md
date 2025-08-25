@@ -106,17 +106,18 @@ This middleware automatically handles the Yaya API authentication requirements:
 
 1. **Timestamp**: Generates a current timestamp for each request (no authentication headers required for the time endpoint)
 2. **Signature**: Creates an HMAC signature using your API secret
-       ```
-       const timestamp= Date.now();
-       const method = 'GET";
-       const endpoint = 'api/en/transactions/function'
-       const body = '';
-       const pre = timestamp + method + endpoint + body;
-       const signature = crypto.create("sha256", api_secret).update(pre).digest('base64);
+   
+       ```signature formula
+         const timestamp= Date.now();
+         const method = 'GET";
+         const endpoint = 'api/en/transactions/function'
+         const body = '';
+         const pre = timestamp + method + endpoint + body;
+         const signature = crypto.create("sha256", api_secret).update(pre).digest('base64);
 
-      # for more info refer to the manual provided by YAYA: https://docs.yayawallet.com/hc/main/articles/1699693758-api-authentication
+        # for more info refer to the manual provided by YAYA: https://docs.yayawallet.com/hc/main/articles/1699693758-api-authentication
        ```
-4. **Headers**: Adds the required headers to each request:
+3. **Headers**: Adds the required headers to each request:
    - `YAYA_API_KEY`: Your Yaya API key
    - `YAYA_API_TIMESTAMP`: The current timestamp
    - `YAYA_API_SIGN`: The generated HMAC signature
