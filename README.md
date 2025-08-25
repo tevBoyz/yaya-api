@@ -60,6 +60,8 @@ npm run dev
 # Server runs on http://localhost:3000
 
 # Use the frontend repo to clone and start the dashboard to view results
+# Dashboard repo: https://github.com/tevBoyz/yaya-frontend
+
 # Alternatively, use Postman to test responses using the endpoints below
 ```
 
