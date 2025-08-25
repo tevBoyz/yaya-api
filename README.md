@@ -71,7 +71,6 @@ npm run dev
 ```http
 GET http://localhost:3000/time
 ```
-Maps to: `GET https://sandbox.yayawallet.com/api/en/time`
 
 ### Get User Transactions
 ```http
@@ -81,7 +80,6 @@ GET http://localhost:3000/transactions/find-by-user
 GET http://localhost:3000/transactions/find-by-user?p=1
 # Returns the first page of transactions
 ```
-Maps to: `GET https://sandbox.yayawallet.com/api/en/transaction/find-by-user`
 
 ### Search Transactions
 ```http
@@ -92,7 +90,6 @@ Content-Type: application/json
   "query": "Your_search_parameter"
 }
 ```
-Maps to: `POST https://sandbox.yayawallet.com/api/en/transaction/search`
 
 ## 🔐 How It Works
 
