@@ -156,7 +156,7 @@ npm run test:e2e
 
 ## Rememeber
 
-👉 Tests require environment variables from .env. Make sure your .env is configured before running.
+👉 Unit test require environment variables from .env. Make sure your .env is configured before running.
 
 👉 E2E tests boot the app using AppModule, so no manual npm run start is needed.
 
