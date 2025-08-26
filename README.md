@@ -126,7 +126,7 @@ This middleware automatically handles the Yaya API authentication requirements:
 
 This project includes two layers of automated tests:
 
-** Unit Tests **
+### Unit Tests 
 
 Located under src/utils/signature.spec.ts.
 Verifies correctness of the signature generation utility.
@@ -138,7 +138,7 @@ npm run test
 
 ```
 
-** End-to-End (E2E) Tests **
+### End-to-End (E2E) Tests
 
 Located under test/app.e2e-spec.ts.
 Spin up the NestJS application in memory (no separate server process required).
@@ -155,10 +155,11 @@ Validate full API behavior, including:
 npm run test:e2e
 ```
 
-🛠️ Notes
+## Rememeber
 
-*** Tests require environment variables from .env. Make sure your .env is configured before running. ***
-***E2E tests boot the app using AppModule, so no manual npm run start is needed.***
+👉 Tests require environment variables from .env. Make sure your .env is configured before running.
+👉 E2E tests boot the app using AppModule, so no manual npm run start is needed.
+
 
 ```You can run both unit and e2e tests together with:
 
