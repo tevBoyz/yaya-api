@@ -30,4 +30,19 @@ describe('API E2E', () => {
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body.data)).toBe(true);
   });
+
+  it('/transactions/search (POST) should return filtered results', async () => {
+  const res = await request(app.getHttpServer())
+    .post('/transactions/search')
+    .send({ query: 'surafel' });
+
+  expect(res.status).toBe(201);
+  expect(Array.isArray(res.body.data)).toBe(true);
+
+  // If results exist, make sure at least one contains the search keyword
+  if (res.body.data.length > 0) {
+    const serialized = JSON.stringify(res.body.data).toLowerCase();
+    expect(serialized).toContain('surafel');
+  }
+});
 });
