@@ -15,6 +15,16 @@ This API middleware serves as a security layer to protect your Yaya Wallet API c
 - Adds proper authentication headers
 - Acts as a proxy between your frontend and the Yaya API
 
+## Assumptions
+- Current User context:
+    User identity is inferred through API creds set in .env (YAYA_API_KEY, YAYA_API_SECRET). No Login and auth implemented.
+- Environment: 
+    Middleware is assumed to run in a secure server enviroment. Secrets should never be revealed on the client side.
+- API Behaviour: 
+    pagination begins at ?p=1 handled server side
+    API may retunr empty array when no records are found.
+- This is a sanbox model
+
 ##  Features
 
 - **Secure Authentication**: Automatically signs requests with keyed-HMAC signatures
@@ -121,6 +131,51 @@ This middleware automatically handles the Yaya API authentication requirements:
    - `YAYA_API_KEY`: Your Yaya API key
    - `YAYA_API_TIMESTAMP`: The current timestamp
    - `YAYA_API_SIGN`: The generated HMAC signature
+
+## Testing
+
+This project includes two layers of automated tests:
+
+### Unit Tests 
+
+Located under src/utils/signature.spec.ts.
+Verifies correctness of the signature generation utility.
+Ensures signatures are consistently generated using the expected algorithm.
+
+```
+# Run unit tests with:
+npm run test
+
+```
+
+### End-to-End (E2E) Tests
+
+Located under test/app.e2e-spec.ts.
+Spin up the NestJS application in memory (no separate server process required).
+Validate full API behavior, including:
+
+1. GET /time → returns server time.
+
+2. GET /transactions/find-by-user?p=1 → returns a paginated list of transactions.
+
+
+```
+# Run e2e tests with:
+npm run test:e2e
+```
+
+## Rememeber
+
+👉 Unit test require environment variables from .env. Make sure your .env is configured before running.
+
+👉 E2E tests boot the app using AppModule, so no manual npm run start is needed.
+
+
+```
+# You can run both unit and e2e tests together with:
+
+npm run test -- --watchAll
+```
 
 ##  Built With
 
