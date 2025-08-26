@@ -4,6 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { HttpService } from "@nestjs/axios";
 import { Injectable, Logger } from "@nestjs/common";
 import { SearchTransactionDto } from "src/transactions/dto/search-transaction-dto";
+import { generateSignature } from "src/utils/signature";
 
 @Injectable()
 export class YayaHttpService {
@@ -26,12 +27,7 @@ export class YayaHttpService {
   async get(path: string, params: Record<string, any> = {}) {
     const fullPath = path.startsWith('/') ? path : `/${path}`;
     
-    const timestamp = Date.now().toString();
-    const prehash = `${timestamp}GET${fullPath}`;
-    const signature = crypto
-      .createHmac('sha256', this.apiSecret)
-      .update(prehash)
-      .digest('base64');
+    const {signature, timestamp} = generateSignature(this.apiSecret, 'GET', fullPath, null);
 
     const headers = {
       'YAYA-API-KEY': this.apiKey,
@@ -56,12 +52,7 @@ export class YayaHttpService {
 async post(path: string, queryDto: SearchTransactionDto) {
   const fullPath = path.startsWith('/') ? path : `/${path}`;
 
-  const timestamp = Date.now().toString();
-  const prehash = `${timestamp}POST${fullPath}${queryDto ? JSON.stringify(queryDto) : ''}`;
-  const signature = crypto
-    .createHmac('sha256', this.apiSecret)
-    .update(prehash)
-    .digest('base64');
+  const {signature, timestamp} = await generateSignature(this.apiSecret, 'POST', fullPath, queryDto);
 
   const headers = {
     'YAYA-API-KEY': this.apiKey,
