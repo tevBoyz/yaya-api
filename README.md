@@ -132,8 +132,8 @@ Located under src/utils/signature.spec.ts.
 Verifies correctness of the signature generation utility.
 Ensures signatures are consistently generated using the expected algorithm.
 
-```Run unit tests with:
-
+```
+# Run unit tests with:
 npm run test
 
 ```
@@ -148,10 +148,9 @@ Validate full API behavior, including:
 
 2. GET /transactions/find-by-user?p=1 → returns a paginated list of transactions.
 
-3. (extend with additional endpoints as implemented)
 
-```Run e2e tests with:
-
+```
+# Run e2e tests with:
 npm run test:e2e
 ```
 
@@ -162,7 +161,8 @@ npm run test:e2e
 👉 E2E tests boot the app using AppModule, so no manual npm run start is needed.
 
 
-```You can run both unit and e2e tests together with:
+```
+# You can run both unit and e2e tests together with:
 
 npm run test -- --watchAll
 ```
