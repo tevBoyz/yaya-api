@@ -15,6 +15,16 @@ This API middleware serves as a security layer to protect your Yaya Wallet API c
 - Adds proper authentication headers
 - Acts as a proxy between your frontend and the Yaya API
 
+## Assumptions
+- Current User context:
+    User identity is inferred through API creds set in .env (YAYA_API_KEY, YAYA_API_SECRET). No Login and auth implemented.
+- Environment: 
+    Middleware is assumed to run in a secure server enviroment. Secrets should never be revealed on the client side.
+- API Behaviour: 
+    pagination begins at ?p=1 handled server side
+    API may retunr empty array when no records are found.
+- This is a sanbox model
+
 ##  Features
 
 - **Secure Authentication**: Automatically signs requests with keyed-HMAC signatures
