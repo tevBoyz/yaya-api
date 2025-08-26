@@ -158,6 +158,14 @@ Validate full API behavior, including:
 
 2. GET /transactions/find-by-user?p=1 → returns a paginated list of transactions.
 
+3. POST /transactions/search → returns filtered transactions based on the search query.
+   ```
+   { "query": "surafel" }
+   ```
+   The test ensures:
+    ✅ Status code 200 is returned.
+    ✅ Response contains a data array.
+    ✅ If transactions exist, at least one record matches the search keyword.
 
 ```
 # Run e2e tests with:
