@@ -122,6 +122,49 @@ This middleware automatically handles the Yaya API authentication requirements:
    - `YAYA_API_TIMESTAMP`: The current timestamp
    - `YAYA_API_SIGN`: The generated HMAC signature
 
+## Testing
+
+This project includes two layers of automated tests:
+
+** Unit Tests **
+
+Located under src/utils/signature.spec.ts.
+Verifies correctness of the signature generation utility.
+Ensures signatures are consistently generated using the expected algorithm.
+
+```Run unit tests with:
+
+npm run test
+
+```
+
+** End-to-End (E2E) Tests **
+
+Located under test/app.e2e-spec.ts.
+Spin up the NestJS application in memory (no separate server process required).
+Validate full API behavior, including:
+
+1. GET /time → returns server time.
+
+2. GET /transactions/find-by-user?p=1 → returns a paginated list of transactions.
+
+3. (extend with additional endpoints as implemented)
+
+```Run e2e tests with:
+
+npm run test:e2e
+```
+
+🛠️ Notes
+
+*** Tests require environment variables from .env. Make sure your .env is configured before running. ***
+***E2E tests boot the app using AppModule, so no manual npm run start is needed.***
+
+```You can run both unit and e2e tests together with:
+
+npm run test -- --watchAll
+```
+
 ##  Built With
 
 - [NestJS](https://nestjs.com/) - API framework
