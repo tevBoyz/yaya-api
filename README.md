@@ -6,6 +6,24 @@ A secure middleware API that acts as a shield between your frontend applications
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 
+## Deployment
+
+The project is deployed and accessible online:
+
+**Frontend** (React App) → Vercel: https://yaya-frontend-pi.vercel.app/
+
+**Backend** (NestJS API) → Render: https://yaya-api-fc5p.onrender.com
+
+Both services are live and integrated.
+
+⚠️ Note: Both deployments use free-tier hosting.
+
+- The backend (Render) may go into sleep mode after inactivity and can take 20–60 seconds to spin back up on the first request.
+
+- This can cause some initial delay when testing the endpoints through the frontend or API directly.
+
+**If you want to run it locally follow the instructions below.**
+
 ## Purpose
 
 This API middleware serves as a security layer to protect your Yaya Wallet API credentials. Instead of calling the Yaya API directly from frontend code (which would expose your API key and secret), all requests are routed through this middleware which:
